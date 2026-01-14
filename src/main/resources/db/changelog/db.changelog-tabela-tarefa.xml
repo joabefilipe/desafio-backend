@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="joabefilipe" id="cd88133d-33bb-4ac0-844d-c81ea9904fb1">
+        <createTable tableName="tarefa">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="titulo" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="descricao" type="TEXT"/>
+
+            <column name="data" type="TIMESTAMP"/>
+
+            <column name="status" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="criado_por" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="criado_em" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="editado_por" type="VARCHAR(100)"/>
+
+            <column name="editado_em" type="TIMESTAMP"/>
+
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

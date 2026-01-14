@@ -7,5 +7,5 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="db/changelog/db.changelog-usuarios.xml"/>
-
+    <include file="db/changelog/db.changelog-tabela-tarefa.xml"/>
 </databaseChangeLog>
