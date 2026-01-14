@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="joabefilipe" id="7d6ed6bd-e4e4-4607-8493-c172a3093944">
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Criar API de tarefas"/>
+            <column name="descricao" value="Desenvolver API REST com Spring Boot"/>
+            <column name="data" valueDate="2026-01-01T10:00:00"/>
+            <column name="status" value="ATIVO"/>
+            <column name="criado_por" value="admin"/>
+            <column name="criado_em" valueDate="2026-01-01T09:00:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Configurar Spring Security"/>
+            <column name="descricao" value="Adicionar autenticação JWT"/>
+            <column name="data" valueDate="2026-01-02T11:00:00"/>
+            <column name="status" value="ATIVO"/>
+            <column name="criado_por" value="admin"/>
+            <column name="criado_em" valueDate="2026-01-02T10:30:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Criar entidades JPA"/>
+            <column name="descricao" value="Mapear entidades com Hibernate"/>
+            <column name="data" valueDate="2026-01-03T14:00:00"/>
+            <column name="status" value="DESATIVADO"/>
+            <column name="criado_por" value="joao"/>
+            <column name="criado_em" valueDate="2026-01-03T13:00:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Criar DTOs"/>
+            <column name="descricao" value="Separar entidade de entrada e saída"/>
+            <column name="data" valueDate="2026-01-04T09:00:00"/>
+            <column name="status" value="DESATIVADO"/>
+            <column name="criado_por" value="joao"/>
+            <column name="criado_em" valueDate="2026-01-04T08:30:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Implementar paginação"/>
+            <column name="descricao" value="Usar Pageable no endpoint de listagem"/>
+            <column name="data" valueDate="2026-01-05T15:00:00"/>
+            <column name="status" value="DESATIVADO"/>
+            <column name="criado_por" value="maria"/>
+            <column name="criado_em" valueDate="2026-01-05T14:00:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Criar filtros dinâmicos"/>
+            <column name="descricao" value="Usar Specification do Spring Data"/>
+            <column name="data" valueDate="2026-01-06T16:00:00"/>
+            <column name="status" value="ATIVO"/>
+            <column name="criado_por" value="maria"/>
+            <column name="criado_em" valueDate="2026-01-06T15:30:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Configurar Liquibase"/>
+            <column name="descricao" value="Criar migrations de banco"/>
+            <column name="data" valueDate="2026-01-07T10:00:00"/>
+            <column name="status" value="ATIVO"/>
+            <column name="criado_por" value="admin"/>
+            <column name="criado_em" valueDate="2026-01-07T09:30:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Criar testes unitários"/>
+            <column name="descricao" value="Testar Service e Controller"/>
+            <column name="data" valueDate="2026-01-08T11:00:00"/>
+            <column name="status" value="DESATIVADO"/>
+            <column name="criado_por" value="joao"/>
+            <column name="criado_em" valueDate="2026-01-08T10:00:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Criar handler global"/>
+            <column name="descricao" value="Centralizar tratamento de exceções"/>
+            <column name="data" valueDate="2026-01-09T14:00:00"/>
+            <column name="status" value="DESATIVADO"/>
+            <column name="criado_por" value="maria"/>
+            <column name="criado_em" valueDate="2026-01-09T13:30:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Refatorar código"/>
+            <column name="descricao" value="Melhorar organização do projeto"/>
+            <column name="data" valueDate="2026-01-10T15:00:00"/>
+            <column name="status" value="DESATIVADO"/>
+            <column name="criado_por" value="admin"/>
+            <column name="criado_em" valueDate="2026-01-10T14:30:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Documentar API"/>
+            <column name="descricao" value="Criar documentação Swagger"/>
+            <column name="data" valueDate="2026-01-11T16:00:00"/>
+            <column name="status" value="DESATIVADO"/>
+            <column name="criado_por" value="joao"/>
+            <column name="criado_em" valueDate="2026-01-11T15:30:00"/>
+        </insert>
+
+        <insert tableName="tarefa">
+            <column name="titulo" value="Revisar code review"/>
+            <column name="descricao" value="Aplicar sugestões recebidas"/>
+            <column name="data" valueDate="2026-01-12T17:00:00"/>
+            <column name="status" value="ATIVO"/>
+            <column name="criado_por" value="admin"/>
+            <column name="criado_em" valueDate="2026-01-12T16:30:00"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
