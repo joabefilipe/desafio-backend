@@ -8,4 +8,6 @@
 
     <include file="db/changelog/db.changelog-usuarios.xml"/>
     <include file="db/changelog/db.changelog-tabela-tarefa.xml"/>
+    <include file="db/changelog/db.changelog-tabela-populada.xml"/>
+    <include file="db/changelog/db.changelog-login-teste.xml"/>
 </databaseChangeLog>
