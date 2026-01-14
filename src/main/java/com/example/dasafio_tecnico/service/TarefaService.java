@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static com.example.dasafio_tecnico.exception.TarefaNaoEncontradaException.hasTitulo;
 import static com.example.dasafio_tecnico.security.UsuarioAutenticado.getLogin;
 import static com.example.dasafio_tecnico.specification.TarefaSpecification.hasStatus;
+import static com.example.dasafio_tecnico.specification.TarefaSpecification.hasTitulo;
 
 @Service
 @RequiredArgsConstructor
@@ -51,4 +51,23 @@ public class TarefaService {
         return page.map(mapper::toResponseDTO);
     }
 
+    public void deleteTarefaPorId(Integer id) {
+        if (!repository.existsById(id)) {
+            throw new TarefaNaoEncontradaException(id);
+        }
+        repository.deleteById(id);
+    }
+
+    public TarefaRespostaDTO atualizarTarefaPorId(Integer id, TarefaDTO dto) {
+        Tarefa tarefa = repository.findById(id)
+                .orElseThrow(() -> new TarefaNaoEncontradaException("Tarefa não encontrada"));
+
+        mapper.updateEntityFromDto(dto, tarefa);
+
+        tarefa.setEditadoPor(getLogin());
+        tarefa.setEditadoEm(LocalDateTime.now());
+
+        Tarefa atualizada = repository.save(tarefa);
+        return mapper.toResponseDTO(atualizada);
+    }
 }

@@ -10,4 +10,13 @@ public class TarefaSpecification {
         return (root, query, cb) ->
                 status == null ? null : cb.equal(root.get("status"), status);
     }
+
+    public static Specification<Tarefa> hasTitulo(String titulo) {
+        return (root, query, cb) ->
+                titulo == null ? null :
+                        cb.like(
+                                cb.lower(root.get("titulo")),
+                                "%" + titulo.toLowerCase() + "%"
+                        );
+    }
 }

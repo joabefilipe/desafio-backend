@@ -5,16 +5,11 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class TarefaNaoEncontradaException extends RuntimeException {
 
-    public TarefaNaoEncontradaException(String mensagem) {
-        super(mensagem);
+    public TarefaNaoEncontradaException(Integer id) {
+        super("Tarefa com ID " + id + " não foi encontrada");
     }
 
-    public static Specification<Tarefa> hasTitulo(String titulo) {
-        return (root, query, cb) ->
-                titulo == null ? null :
-                        cb.like(
-                                cb.lower(root.get("titulo")),
-                                "%" + titulo.toLowerCase() + "%"
-                        );
+    public TarefaNaoEncontradaException(String mensagem) {
+        super(mensagem);
     }
 }
