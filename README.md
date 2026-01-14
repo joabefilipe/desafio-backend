@@ -1,72 +1,96 @@
 # desafio-backend
 
-# Desafio Backend – API REST com Spring Boot
+API REST desenvolvida em **Java 17 + Spring Boot**, com autenticação **JWT**, gerenciamento de usuários e tarefas, persistência em **PostgreSQL** e versionamento do banco via **Liquibase**.
 
-Este projeto faz parte de um **desafio técnico backend**, com o objetivo de demonstrar conhecimentos em **Java, Spring Boot, segurança, persistência de dados e boas práticas de versionamento**.
-
-A aplicação consiste em uma **API REST** com autenticação baseada em **JWT**, cadastro e login de usuários, e persistência em **PostgreSQL**, seguindo uma arquitetura organizada e extensível.
+O projeto foi preparado para ser executado com **Docker Compose**, subindo toda a stack com **um único comando**.
 
 ---
 
-##  Tecnologias Utilizadas
+##  Requisitos da entrega atendidos
+
+- Projeto versionado em repositório Git público 
+- `docker-compose up` sobe toda a stack 
+- README com descrição e horas utilizadas 
+
+---
+
+## Horas utilizadas no desenvolvimento do back-end (5 horas)
+
+- **Primeira fase (configuração do Git, estrutura inicial do projeto e primeiros commits):**
+  - Início: **18:30**
+  - Fim: **22:30**
+  - Total: **4 horas**
+
+> As próximas etapas (Docker, Liquibase, endpoints, segurança, etc.) foram desenvolvidas dentro do mesmo período do desafio técnico.
+
+---
+
+##  Tecnologias utilizadas
 
 - **Java 17**
 - **Spring Boot**
-    - Spring Web
-    - Spring Data JPA
-    - Spring Security
-    - Validation
-- **JWT (JSON Web Token)** – autenticação
-- **PostgreSQL** – banco de dados relacional
-- **Liquibase** – versionamento do banco de dados
-- **Maven** – gerenciamento de dependências
-- **Git & GitHub** – versionamento de código
+  - Spring Web
+  - Spring Data JPA
+  - Spring Security
+  - Validation
+- **JWT**
+- **PostgreSQL**
+- **Liquibase**
+- **MapStruct**
+- **Swagger/OpenAPI** (springdoc)
+- **Docker / Docker Compose**
+- **Maven**
 
 ---
 
-##  Arquitetura do Projeto
 
-O projeto segue uma separação clara de responsabilidades:
+Estrutura organizada por responsabilidade:
 
-- `controller` → Camada de entrada (endpoints REST)
+- `controller` → Endpoints REST
 - `service` → Regras de negócio
-- `repository` → Acesso a dados (JPA)
+- `repository` → Acesso a dados (Spring Data JPA)
 - `entity` → Entidades JPA
-- `security` → Configurações de segurança e filtros JWT
-- `dto` → Objetos de transferência de dados
+- `security` → JWT, filtros e configurações de segurança
+- `dto` → Objetos de entrada/saída
 - `exception` → Tratamento de exceções
-- `db/changelog` → Scripts de versionamento do banco (Liquibase)
+- `db/changelog` → Migrations do banco (Liquibase)
 
 ---
 
-##  Segurança
+## Segurança (JWT)
 
 - Autenticação baseada em **JWT**
 - Endpoints públicos:
-    - `POST /auth/login`
-    - `POST /usuario/cadastro`
-- Demais endpoints protegidos por autenticação
-- Sessão **stateless**
-- CSRF desabilitado para APIs REST
+  - `POST /auth/login`
+  - `POST /usuario/cadastro`
+- Demais endpoints exigem **Bearer Token**
+- API stateless (sem sessão)
 
 ---
 
-##  Banco de Dados
+## Banco de dados e migrations
 
 - **PostgreSQL**
-- Criação e versionamento das tabelas via **Liquibase**
-- Configuração definida em `application.properties`
+- Criação de tabelas e dados iniciais via **Liquibase**
+- Base sobe automaticamente ao executar o Docker Compose
 
 ---
 
-## ▶ Como Executar o Projeto
+## Como executar com Docker (recomendado)
 
 ### Pré-requisitos
-- Java 17+
-- Maven
-- PostgreSQL em execução
+- Docker + Docker Compose instalados
 
-### Passos
-1. Clone o repositório:
-   ```bash
-   git clone git@github.com:joabefilipe/desafio-backend.git
+### Subir a aplicação (stack completa)
+Na raiz do projeto:
+
+```bash
+docker compose up --build
+
+Credenciais de teste (usuário já criado no banco)
+Use essas credenciais para logar e pegar o token:
+
+{
+  "login": "admin",
+  "password": "123461"
+}

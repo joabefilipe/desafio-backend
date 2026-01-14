@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:16
+    container_name: desafio-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-dasafio_tecnico}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-dasafio_tecnico}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    container_name: desafio-api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-dasafio_tecnico}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_LIQUIBASE_ENABLED: "true"
+      SPRING_LIQUIBASE_CHANGE_LOG: db/db.changelog-master.xml
+
+      JWT_SECRET: ${JWT_SECRET:-my-secret-key}
+
+      WEATHER_API_KEY: '0c13e9104a5e055fdda58d7c7ea226e0'
+      WEATHER_API_BASE_URL: ${WEATHER_API_BASE_URL:-https://api.openweathermap.org/data/2.5/weather}
+      WEATHER_API_UNITS: ${WEATHER_API_UNITS:-metric}
+      WEATHER_API_LANG: ${WEATHER_API_LANG:-pt_br}
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
