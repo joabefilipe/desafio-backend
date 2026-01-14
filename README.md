@@ -94,3 +94,31 @@ Use essas credenciais para logar e pegar o token:
   "login": "admin",
   "password": "123461"
 }
+
+Testes da API (Postman)
+
+Para facilitar a validação do desafio, o projeto conta com uma collection do Postman contendo todos os endpoints já configurados e testados.
+
+ Collection disponível em:
+
+/postman/Tarefa.postman_collection.json
+
+Como utilizar
+
+Abra o Postman
+
+Clique em Import
+
+Selecione o arquivo:
+
+postman/Tarefa.postman_collection.json
+
+
+Execute o endpoint de login:
+
+POST /auth/login
+
+
+Copie o token JWT retornado
+
+Configure o token como Bearer Token nas requisições protegidas
