@@ -48,6 +48,13 @@ public class TarefaController {
         return ResponseEntity.ok(tarefaService.buscarTarefa(status, titulo, pageable));
     }
 
+    @Operation(summary = "Buscar tarefa por id")
+    @GetMapping("/{id}")
+    public ResponseEntity<TarefaRespostaDTO> buscarTarefaPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(tarefaService.buscarTarefaPorId(id));
+    }
+
+
     @Operation(summary = "Deletar tarefa")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTarefaPorId(

@@ -51,6 +51,13 @@ public class TarefaService {
         return page.map(mapper::toResponseDTO);
     }
 
+    public TarefaRespostaDTO buscarTarefaPorId(Integer id) {
+        Tarefa tarefa = repository.findById(id)
+                .orElseThrow(() -> new TarefaNaoEncontradaException(id));
+
+        return mapper.toResponseDTO(tarefa);
+    }
+
     public void deleteTarefaPorId(Integer id) {
         if (!repository.existsById(id)) {
             throw new TarefaNaoEncontradaException(id);
