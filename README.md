@@ -103,7 +103,7 @@ A aplicação já inicia com **dados populados no banco de dados** para facilita
 ```
 Tempo de Desenvolvimento
 
-Tempo total aproximado: 28 horas
+Tempo total aproximado: 18 horas
 
 Autor
 
