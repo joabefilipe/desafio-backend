@@ -19,7 +19,7 @@ async function onSubmit() {
 
   try {
     await auth.login({ login: login.value, password: password.value });
-    router.push("/tasks");
+    router.push("/tarefa");
   } catch {
     error.value = "Login inválido. Verifique usuário e senha.";
   } finally {
