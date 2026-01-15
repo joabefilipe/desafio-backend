@@ -1,4 +1,4 @@
-README.md (RAIZ DO PROJETO)
+README.md
 # Desafio Técnico – Sistema de Gerenciamento de Tarefas
 
 Este projeto consiste em um **sistema completo de gerenciamento de tarefas**, desenvolvido como parte de um desafio técnico, utilizando **Spring Boot no backend** e **Vue 3 + TypeScript no frontend**.
