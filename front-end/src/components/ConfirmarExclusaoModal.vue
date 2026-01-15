@@ -25,10 +25,18 @@ const emit = defineEmits<{
       <p v-if="erro" class="erro">{{ erro }}</p>
 
       <div class="acoes">
-        <button class="btn btn--fantasma" :disabled="loading" @click="emit('close')">
+        <button
+          class="btn btn--fantasma"
+          :disabled="loading"
+          @click="emit('close')"
+        >
           Cancelar
         </button>
-        <button class="btn btn--perigo" :disabled="loading" @click="emit('confirm')">
+        <button
+          class="btn btn--perigo"
+          :disabled="loading"
+          @click="emit('confirm')"
+        >
           {{ loading ? "Excluindo..." : "Excluir" }}
         </button>
       </div>

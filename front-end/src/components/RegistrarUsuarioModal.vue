@@ -8,7 +8,10 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: "close"): void;
-  (e: "registered", payload: { login: string; password: string; role: UserRole }): void;
+  (
+    e: "registered",
+    payload: { login: string; password: string; role: UserRole }
+  ): void;
 }>();
 
 const login = ref("");
@@ -38,9 +41,17 @@ async function onSubmit() {
   loading.value = true;
 
   try {
-    await registrarUsuario({ login: login.value, password: password.value, role: role.value });
+    await registrarUsuario({
+      login: login.value,
+      password: password.value,
+      role: role.value,
+    });
     success.value = "Usuário cadastrado com sucesso!";
-    emit("registered", { login: login.value, password: password.value, role: role.value });
+    emit("registered", {
+      login: login.value,
+      password: password.value,
+      role: role.value,
+    });
 
     setTimeout(() => emit("close"), 600);
   } catch (e: any) {
@@ -97,7 +108,7 @@ function close() {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
   display: grid;
   place-items: center;
   padding: 16px;
@@ -106,7 +117,7 @@ function close() {
   width: 100%;
   max-width: 420px;
   background: #1a1a1a;
-  color: rgba(255,255,255,0.87);
+  color: rgba(255, 255, 255, 0.87);
   border-radius: 12px;
   padding: 16px;
 }
@@ -127,16 +138,17 @@ function close() {
   display: grid;
   gap: 6px;
 }
-input, select {
+input,
+select {
   padding: 10px;
   border: 1px solid #334155;
   border-radius: 8px;
   background: #242424;
-  color: rgba(255,255,255,0.87);
+  color: rgba(255, 255, 255, 0.87);
 }
 select option {
   background: #242424;
-  color: rgba(255,255,255,0.87);
+  color: rgba(255, 255, 255, 0.87);
 }
 .primary {
   width: 100%;
@@ -145,6 +157,12 @@ select option {
   border: none;
   cursor: pointer;
 }
-.error { color: #b00020; margin-top: 10px; }
-.success { color: #137333; margin-top: 10px; }
+.error {
+  color: #b00020;
+  margin-top: 10px;
+}
+.success {
+  color: #137333;
+  margin-top: 10px;
+}
 </style>

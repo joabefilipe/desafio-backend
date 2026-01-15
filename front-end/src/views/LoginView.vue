@@ -35,15 +35,15 @@ function onRegistered(payload: { login: string; password: string }) {
 
 <template>
   <div class="login-container">
-    <h1 style="margin-bottom: 16px;">Login</h1>
+    <h1 style="margin-bottom: 16px">Login</h1>
 
     <form @submit.prevent="onSubmit">
-      <div style="margin-bottom: 12px;">
+      <div style="margin-bottom: 12px">
         <label>Login</label>
         <input v-model="login" type="text" required class="input" />
       </div>
 
-      <div style="margin-bottom: 12px;">
+      <div style="margin-bottom: 12px">
         <label>Senha</label>
         <input v-model="password" type="password" required class="input" />
       </div>
@@ -52,11 +52,15 @@ function onRegistered(payload: { login: string; password: string }) {
         {{ loading ? "Entrando..." : "Entrar" }}
       </button>
 
-      <p v-if="error" style="color: red; margin-top: 10px;">
+      <p v-if="error" style="color: red; margin-top: 10px">
         {{ error }}
       </p>
 
-      <button type="button" @click="showRegister = true" class="btn btn-secondary">
+      <button
+        type="button"
+        @click="showRegister = true"
+        class="btn btn-secondary"
+      >
         Cadastrar usuário
       </button>
     </form>

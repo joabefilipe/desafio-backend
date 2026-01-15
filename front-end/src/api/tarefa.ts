@@ -10,6 +10,14 @@ export type Tarefa = {
   status: StatusTarefa;
 };
 
+export type TarefaPayload = {
+  titulo: string;
+  descricao: string;
+  data: string;
+  status: StatusTarefa;
+};
+
+
 export type Pagina<T> = {
   content: T[];
   number: number;
@@ -24,6 +32,21 @@ export async function listarTarefas(pagina = 0, tamanho = 9) {
   return res.data as Pagina<Tarefa> | Tarefa[];
 }
 
+export async function buscarTarefaPorId(id: number) {
+  const res = await http.get(`/tarefa/${id}`);
+  return res.data as Tarefa;
+}
+
+
 export async function deletarTarefa(id: number) {
   return http.delete(`/tarefa/${id}`);
+}
+
+
+export async function criarTarefa(payload: TarefaPayload) {
+  return http.post("/tarefa", payload);
+}
+
+export async function atualizarTarefa(id: number, payload: TarefaPayload) {
+  return http.put(`/tarefa/${id}`, payload);
 }
