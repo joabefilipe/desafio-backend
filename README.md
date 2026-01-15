@@ -95,12 +95,12 @@ desafio-tecnico/
 A aplicação já inicia com **dados populados no banco de dados** para facilitar os testes.
 
 ### Usuários cadastrados
-
+```
 {
   "login": "admin",
   "password": "123461"
 }
-
+```
 Tempo de Desenvolvimento
 
 Tempo total aproximado: 28 horas
