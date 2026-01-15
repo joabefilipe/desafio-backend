@@ -17,7 +17,6 @@ export const useAuthStore = defineStore("auth", {
     async login(payload: LoginPayload) {
       const { data } = await http.post("/auth/login", payload);
 
-      // Ajuste se o backend retornar { token: "..." } / { accessToken: "..." }
       const token = data.token ?? data.accessToken ?? data;
 
       this.token = token;
