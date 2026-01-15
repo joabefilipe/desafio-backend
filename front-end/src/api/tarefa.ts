@@ -17,6 +17,11 @@ export type TarefaPayload = {
   status: StatusTarefa;
 };
 
+export type FiltroTarefas = {
+  titulo?: string;
+  status?: StatusTarefa | "";
+};
+
 
 export type Pagina<T> = {
   content: T[];
@@ -27,9 +32,19 @@ export type Pagina<T> = {
   last: boolean;
 };
 
-export async function listarTarefas(pagina = 0, tamanho = 9) {
-  const res = await http.get("/tarefa", { params: { page: pagina, size: tamanho } });
-  return res.data as Pagina<Tarefa> | Tarefa[];
+export async function listarTarefas(
+  pagina = 0,
+  tamanho = 9,
+  filtro: FiltroTarefas = {}
+) {
+  
+  const params: any = { page: pagina, size: tamanho };
+
+  if (filtro.titulo?.trim()) params.titulo = filtro.titulo.trim();
+  if (filtro.status) params.status = filtro.status;
+
+  const res = await http.get("/tarefa", { params });
+  return res.data as Pagina<Tarefa>;
 }
 
 export async function buscarTarefaPorId(id: number) {

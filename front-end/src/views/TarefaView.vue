@@ -7,9 +7,13 @@ import {
   type Tarefa,
 } from "../api/tarefa";
 import { useRouter } from "vue-router";
-import { Pencil, Trash2, Plus } from "lucide-vue-next";
+import { Pencil, Trash2, Plus, Search } from "lucide-vue-next";
 import ConfirmarExclusaoModal from "../components/ConfirmarExclusaoModal.vue";
+import FiltroTarefasModal from "../components/FiltroTarefasModal.vue";
+import { useTarefasFiltroStore } from "../stores/tarefasFiltro";
+import WeatherModal from "../components/WeatherModal.vue";
 
+const weatherAberto = ref(false);
 const router = useRouter();
 
 const tarefas = ref<Tarefa[]>([]);
@@ -20,6 +24,8 @@ const pagina = ref(0);
 const tamanho = ref(9);
 const temMais = ref(true);
 const sentinela = ref<HTMLElement | null>(null);
+const filtroStore = useTarefasFiltroStore();
+const modalFiltroAberto = ref(false);
 
 const titulo = computed(() => `Tarefas (${tarefas.value.length})`);
 
@@ -47,6 +53,14 @@ function normalizarResposta(data: Pagina<Tarefa>) {
   return { itens: data.content ?? [], ultima: data.last ?? true };
 }
 
+async function aplicarFiltro() {
+  tarefas.value = [];
+  pagina.value = 0;
+  temMais.value = true;
+
+  await carregarMais();
+}
+
 async function carregarMais() {
   if (carregando.value || !temMais.value) return;
 
@@ -54,8 +68,12 @@ async function carregarMais() {
   erro.value = null;
 
   try {
-    const data = await listarTarefas(pagina.value, tamanho.value);
-    const { itens, ultima } = normalizarResposta(data);
+    const data = await listarTarefas(pagina.value, tamanho.value, {
+      titulo: filtroStore.titulo,
+      status: filtroStore.status,
+    });
+
+    const { itens, ultima } = normalizarResposta(data as Pagina<Tarefa>);
 
     if (!itens.length) {
       temMais.value = false;
@@ -140,7 +158,6 @@ onMounted(async () => {
     <header class="topo">
       <div>
         <h1 class="titulo">{{ titulo }}</h1>
-        <p class="subtitulo">Listagem com paginação e scroll infinito</p>
       </div>
 
       <div class="acoes">
@@ -151,6 +168,18 @@ onMounted(async () => {
         >
           Carregar mais
         </button>
+        <button
+          class="btn btn--fantasma icon-only"
+          title="Filtrar"
+          @click="modalFiltroAberto = true"
+        >
+          <Search :size="18" />
+        </button>
+        <button class="btn btn--fantasma" @click="weatherAberto = true">
+          Clima
+        </button>
+
+        <WeatherModal :open="weatherAberto" @close="weatherAberto = false" />
 
         <button class="btn" @click="irParaCriar">
           <Plus :size="18" /> Cadastrar
@@ -198,6 +227,11 @@ onMounted(async () => {
       <p v-else-if="!temMais" class="muted">Fim da lista ✅</p>
       <div ref="sentinela" style="height: 1px"></div>
     </footer>
+    <FiltroTarefasModal
+      :open="modalFiltroAberto"
+      @close="modalFiltroAberto = false"
+      @apply="aplicarFiltro"
+    />
 
     <ConfirmarExclusaoModal
       :open="modalExcluirAberto"
