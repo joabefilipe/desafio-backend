@@ -86,15 +86,16 @@ Na raiz do projeto:
 
 ```bash
 docker compose up --build
+```
 
 Credenciais de teste (usuário já criado no banco)
 Use essas credenciais para logar e pegar o token:
-
+```
 {
   "login": "admin",
   "password": "123461"
 }
-
+```
 Testes da API (Postman)
 
 Para facilitar a validação do desafio, o projeto conta com uma collection do Postman contendo todos os endpoints já configurados e testados.
