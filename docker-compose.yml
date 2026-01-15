@@ -17,7 +17,8 @@ services:
       retries: 10
 
   api:
-    build: .
+    build:
+      context: ./back-end
     container_name: desafio-api
     ports:
       - "8080:8080"
@@ -28,7 +29,7 @@ services:
 
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_LIQUIBASE_ENABLED: "true"
-      SPRING_LIQUIBASE_CHANGE_LOG: db/db.changelog-master.xml
+      SPRING_LIQUIBASE_CHANGE_LOG: classpath:/db/db.changelog-master.xml
 
       JWT_SECRET: ${JWT_SECRET:-my-secret-key}
 
@@ -40,6 +41,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
+        
+  front:
+    build:
+      context: ./front-end
+    container_name: desafio-front
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
 
 volumes:
   postgres_data:
