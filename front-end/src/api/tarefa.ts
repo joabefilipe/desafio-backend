@@ -23,3 +23,7 @@ export async function listarTarefas(pagina = 0, tamanho = 9) {
   const res = await http.get("/tarefa", { params: { page: pagina, size: tamanho } });
   return res.data as Pagina<Tarefa> | Tarefa[];
 }
+
+export async function deletarTarefa(id: number) {
+  return http.delete(`/tarefa/${id}`);
+}

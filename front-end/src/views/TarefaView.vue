@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import { listarTarefas, type Pagina, type Tarefa } from "../api/tarefa";
+import { listarTarefas, deletarTarefa, type Pagina, type Tarefa } from "../api/tarefa";
 import { useRouter } from "vue-router";
+import { Pencil, Trash2 } from "lucide-vue-next";
+import ConfirmarExclusaoModal from "../components/ConfirmarExclusaoModal.vue";
 
 const router = useRouter();
 
@@ -16,6 +18,24 @@ const temMais = ref(true);
 const sentinela = ref<HTMLElement | null>(null);
 
 const titulo = computed(() => `Tarefas (${tarefas.value.length})`);
+const modalExcluirAberto = ref(false);
+const tarefaSelecionada = ref<Tarefa | null>(null);
+
+const excluindo = ref(false);
+const erroExcluir = ref<string | null>(null);
+
+function abrirExcluir(t: Tarefa) {
+  tarefaSelecionada.value = t;
+  erroExcluir.value = null;
+  modalExcluirAberto.value = true;
+}
+
+function fecharExcluir() {
+  modalExcluirAberto.value = false;
+  tarefaSelecionada.value = null;
+  erroExcluir.value = null;
+}
+
 
 function formatarData(iso: string) {
   try {
@@ -38,6 +58,30 @@ function normalizarResposta(data: Pagina<Tarefa> | Tarefa[]) {
   }
   return { itens: data.content ?? [], ultima: data.last ?? true };
 }
+
+async function confirmarExcluir() {
+  if (!tarefaSelecionada.value?.id) {
+    erroExcluir.value = "Não foi possível excluir: tarefa sem ID.";
+    return;
+  }
+
+  excluindo.value = true;
+  erroExcluir.value = null;
+
+  try {
+    await deletarTarefa(tarefaSelecionada.value.id);
+
+    tarefas.value = tarefas.value.filter((x) => x.id !== tarefaSelecionada.value!.id);
+
+    fecharExcluir();
+  } catch (e: any) {
+    erroExcluir.value =
+      "Não foi possível excluir. Verifique permissões (ADMIN) e se a API está rodando.";
+  } finally {
+    excluindo.value = false;
+  }
+}
+
 
 async function carregarMais() {
   if (carregando.value || !temMais.value) return;
@@ -106,7 +150,18 @@ onMounted(async () => {
       <article v-for="(t, i) in tarefas" :key="t.id ?? i" class="card">
         <div class="card__cabecalho">
           <h3 class="card__titulo">{{ t.titulo }}</h3>
-          <span :class="classeStatus(t.status)">{{ t.status }}</span>
+          <div class="acoes-card">
+  <span :class="classeStatus(t.status)">{{ t.status }}</span>
+
+  <button class="icon-btn" title="Editar" @click="() => alert('Edição: próxima etapa')">
+    <Pencil :size="18" />
+  </button>
+
+  <button class="icon-btn icon-btn--perigo" title="Excluir" @click="abrirExcluir(t)">
+    <Trash2 :size="18" />
+  </button>
+</div>
+
         </div>
 
         <p class="card__descricao">{{ t.descricao }}</p>
@@ -123,7 +178,17 @@ onMounted(async () => {
       <p v-else-if="!temMais" class="muted">Fim da lista</p>
       <div ref="sentinela" style="height: 1px;"></div>
     </footer>
+  <ConfirmarExclusaoModal
+  :open="modalExcluirAberto"
+  :titulo="tarefaSelecionada?.titulo"
+  :loading="excluindo"
+  :erro="erroExcluir"
+  @close="fecharExcluir"
+  @confirm="confirmarExcluir"
+/>
   </div>
+ 
+
 </template>
 
 <style scoped>
@@ -211,6 +276,37 @@ onMounted(async () => {
   margin-bottom: 10px;
 }
 
+.acoes-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+
+  background: transparent;
+  border: none;
+  border-radius: 0;
+
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  line-height: 0; 
+}
+
+.icon-btn:hover {
+  border-color: #4b5563;
+}
+
+.icon-btn--perigo:hover {
+  border-color: rgba(176, 0, 32, 0.8);
+}
+
 .card__titulo {
   margin: 0;
   font-size: 16px;
@@ -258,6 +354,13 @@ onMounted(async () => {
   margin-top: 16px;
   text-align: center;
 }
+
+.icon-btn:focus-visible {
+  outline: 2px solid #646cff;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
 
 .muted {
   opacity: 0.75;
